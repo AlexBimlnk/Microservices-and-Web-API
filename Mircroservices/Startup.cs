@@ -28,7 +28,9 @@ namespace Mircroservices
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<StudentContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddRazorPages();
+            services.AddDbContext<StudentContext>(opt => opt.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog={nameof(StudentContext)};Integrated Security=True"));
+            //services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
