@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mircroservices.Models;
+using Interfaces;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Mircroservices.Controllers
 {
@@ -36,13 +41,30 @@ namespace Mircroservices.Controllers
         //}
 
         [HttpGet("{id}")]
-        public async ValueTask<Student> Get(long? id)
+        public async ValueTask<IStudent> Get(long? id)
         {
             return await Task.Run(() =>
             {
                 var student = _context.Students.FindAsync(id).Result;
                 return student;
             });
+        }
+
+        [HttpGet("course/{studentId}")]
+        public async Task<string> GetCourse(long? studentId)
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient client = new HttpClient(clientHandler))
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44385/api/courses/{studentId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    object course = await JsonSerializer.DeserializeAsync<object>(await response.Content.ReadAsStreamAsync());
+                    return course.ToString();
+                }
+            }
+            return null;
         }
 
         // POST: Students
@@ -72,6 +94,7 @@ namespace Mircroservices.Controllers
         public async Task DeleteConfirmed(long id)
         {
             var student = await _context.Students.FindAsync(id);
+            _context.Students.Attach(student);
             _context.Students.Remove(student);
             await _context.SaveChangesAsync();
         }
