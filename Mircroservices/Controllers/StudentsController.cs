@@ -41,7 +41,7 @@ namespace Mircroservices.Controllers
         //}
 
         [HttpGet("{id}")]
-        public async ValueTask<IStudent> Get(long? id)
+        public async Task<IStudent> Get(long? id)
         {
             return await Task.Run(() =>
             {
@@ -53,11 +53,12 @@ namespace Mircroservices.Controllers
         [HttpGet("course/{studentId}")]
         public async Task<string> GetCourse(long? studentId)
         {
+            IStudent student = await Get(studentId);
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             using (HttpClient client = new HttpClient(clientHandler))
             {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44385/api/courses/{studentId}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44385/api/courses/{student.CourseId}");
                 if (response.IsSuccessStatusCode)
                 {
                     object course = await JsonSerializer.DeserializeAsync<object>(await response.Content.ReadAsStreamAsync());
