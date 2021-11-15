@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MircroserviceStudent", "Mircroservices\MircroserviceStudent.csproj", "{2A1CB916-E04B-46E0-9A31-52F832C2E5BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MircroserviceStudent", "MircroserviceStudent\MircroserviceStudent.csproj", "{2A1CB916-E04B-46E0-9A31-52F832C2E5BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\Interfaces.csproj", "{9C30D6F6-F276-41D7-A184-3A0E48A51ACA}"
 EndProject
