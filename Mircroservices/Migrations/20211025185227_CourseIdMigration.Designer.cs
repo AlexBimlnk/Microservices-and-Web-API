@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Mircroservices.Models;
+using MircroserviceStudent.Models;
 
-namespace Mircroservices.Migrations
+namespace MircroserviceStudent.Migrations
 {
     [DbContext(typeof(StudentContext))]
     [Migration("20211025185227_CourseIdMigration")]

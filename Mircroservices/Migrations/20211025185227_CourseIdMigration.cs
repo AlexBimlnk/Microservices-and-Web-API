@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Mircroservices.Migrations
+namespace MircroserviceStudent.Migrations
 {
     public partial class CourseIdMigration : Migration
     {

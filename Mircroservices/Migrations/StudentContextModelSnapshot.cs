@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Mircroservices.Models;
+using MircroserviceStudent.Models;
 
-namespace Mircroservices.Migrations
+namespace MircroserviceStudent.Migrations
 {
     [DbContext(typeof(StudentContext))]
     partial class StudentContextModelSnapshot : ModelSnapshot

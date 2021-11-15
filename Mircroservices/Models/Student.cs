@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Interfaces;
 
-namespace Mircroservices.Models
+namespace MircroserviceStudent.Models
 {
-    public class Student : IStudent
+    [Serializable]
+    public class Student
     {
         public long Id { get; set; }
         public string Name { get; set; }

@@ -31,16 +31,6 @@ namespace MicroserviceCourse.Controllers
         }
 
         //Get: Courses/{id}
-        //[HttpGet("{id}")]
-        //public async ValueTask<ICourse> Get(long? id)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        var course = _context.Courses.FindAsync(id).Result;
-        //        return course;
-        //    });
-        //}
-        //Get: Courses/{id}
         [HttpGet("{id}")]
         public async Task<object> GetHttpMessage(long? id)
         {
@@ -85,11 +75,6 @@ namespace MicroserviceCourse.Controllers
             await _context.SaveChangesAsync();
         }
 
-        //// GET: Courses
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Courses.ToListAsync());
-        //}
 
         //// GET: Courses/Details/5
         //public async Task<IActionResult> Details(long? id)

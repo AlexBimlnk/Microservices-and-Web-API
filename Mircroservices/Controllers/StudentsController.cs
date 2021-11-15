@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Mircroservices.Models;
+using MircroserviceStudent.Models;
 using Interfaces;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace Mircroservices.Controllers
+namespace MircroserviceStudent.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -41,7 +41,7 @@ namespace Mircroservices.Controllers
         //}
 
         [HttpGet("{id}")]
-        public async Task<IStudent> Get(long? id)
+        public async Task<ActionResult<Student>> Get(long? id)
         {
             return await Task.Run(() =>
             {
@@ -53,7 +53,8 @@ namespace Mircroservices.Controllers
         [HttpGet("course/{studentId}")]
         public async Task<string> GetCourse(long? studentId)
         {
-            IStudent student = await Get(studentId);
+            ActionResult<Student> actionResult = await Get(studentId);
+            Student student = actionResult.Value;
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             using (HttpClient client = new HttpClient(clientHandler))
