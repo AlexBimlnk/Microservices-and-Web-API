@@ -17,6 +17,7 @@ namespace MicroserviceCourse.Controllers
     public class CoursesController : Controller
     {
         private readonly CourseContext _context;
+        private readonly string _compositeSeviceAddress = "https://localhost:44354/api/compositesc";
 
         public CoursesController(CourseContext context)
         {
@@ -30,17 +31,21 @@ namespace MicroserviceCourse.Controllers
             return View(await _context.Courses.ToListAsync());
         }
 
-        //Get: Courses/{id}
-        [HttpGet("{id}")]
-        public async Task<object> GetHttpMessage(long? id)
+        //GET: Courses/all
+        [HttpGet("all")]
+        public async Task<string> GetAllCourses()
         {
-            return await Task.Run(() =>
-            {
-                Course course = _context.Courses.FindAsync(id).Result;
-                string json = JsonSerializer.Serialize<Course>(course);
-                //return Ok(json);
-                return json;
-            });
+            var courses = await _context.Courses.ToListAsync();
+
+            return JsonSerializer.Serialize(courses);
+        }
+
+        //Get: Courses/name/{groupName}
+        [HttpGet("name/{groupName}")]
+        public async Task<string> GetCourseByName(string groupName)
+        {
+            var course = await _context.Courses.Where(c => c.Name == groupName).FirstAsync();
+            return JsonSerializer.Serialize(course);
         }
 
         // POST: Courses
@@ -65,7 +70,7 @@ namespace MicroserviceCourse.Controllers
             await _context.SaveChangesAsync();
         }
 
-        //Delete
+        //Delete: courses/{id}
         [HttpDelete("{id}")]
         public async Task DeleteConfirmed(long id)
         {
@@ -74,123 +79,5 @@ namespace MicroserviceCourse.Controllers
             _context.Courses.Remove(student);
             await _context.SaveChangesAsync();
         }
-
-
-        //// GET: Courses/Details/5
-        //public async Task<IActionResult> Details(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var course = await _context.Courses
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (course == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(course);
-        //}
-
-        //// POST: Courses/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,Disciplenes")] Course course)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(course);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(course);
-        //}
-
-        //// GET: Courses/Edit/5
-        //public async Task<IActionResult> Edit(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var course = await _context.Courses.FindAsync(id);
-        //    if (course == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(course);
-        //}
-
-        //// POST: Courses/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Disciplenes")] Course course)
-        //{
-        //    if (id != course.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(course);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!CourseExists(course.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(course);
-        //}
-
-        //// GET: Courses/Delete/5
-        //public async Task<IActionResult> Delete(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var course = await _context.Courses
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (course == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(course);
-        //}
-
-        //// POST: Courses/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(long id)
-        //{
-        //    var course = await _context.Courses.FindAsync(id);
-        //    _context.Courses.Remove(course);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool CourseExists(long id)
-        //{
-        //    return _context.Courses.Any(e => e.Id == id);
-        //}
     }
 }

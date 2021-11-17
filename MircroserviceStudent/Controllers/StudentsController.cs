@@ -19,6 +19,7 @@ namespace MircroserviceStudent.Controllers
     public class StudentsController : Controller
     {
         private readonly StudentContext _context;
+        private readonly string _compositeSeviceAddress = "https://localhost:44354/api/compositesc";
 
         public StudentsController(StudentContext context)
         {
@@ -32,13 +33,14 @@ namespace MircroserviceStudent.Controllers
             return View(await _context.Students.ToListAsync());
         }
 
-        //GET: Students
-        //[HttpGet]
-        //public IEnumerable<Student> Index()
-        //{
-        //    var students = _context.Students.ToList();
-        //    return students;
-        //}
+        //GET: Students/all
+        [HttpGet("all")]
+        public async Task<string> GetAllCourses()
+        {
+            var students = await _context.Students.ToListAsync();
+
+            return JsonSerializer.Serialize(students);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> Get(long? id)
@@ -50,24 +52,18 @@ namespace MircroserviceStudent.Controllers
             });
         }
 
-        [HttpGet("course/{studentId}")]
-        public async Task<string> GetCourse(long? studentId)
-        {
-            ActionResult<Student> actionResult = await Get(studentId);
-            Student student = actionResult.Value;
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            using (HttpClient client = new HttpClient(clientHandler))
-            {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44385/api/courses/{student.CourseId}");
-                if (response.IsSuccessStatusCode)
-                {
-                    object course = await JsonSerializer.DeserializeAsync<object>(await response.Content.ReadAsStreamAsync());
-                    return course.ToString();
-                }
-            }
-            return null;
-        }
+        //[HttpGet("course/{studentId}")]
+        //public async Task<string> GetCourseDisciplenes(long? studentId)
+        //{
+        //    ActionResult<Student> actionResult = await Get(studentId);
+        //    Student student = actionResult.Value;
+        //    HttpClientHandler clientHandler = new HttpClientHandler();
+        //    clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+        //    using (HttpClient client = new HttpClient(clientHandler))
+        //    {
+        //        return await client.GetStringAsync($"{_compositeSeviceAddress}/disciplenes/{student.GroupName}");
+        //    }
+        //}
 
         // POST: Students
         [HttpPost]

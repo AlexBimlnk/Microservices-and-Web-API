@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MircroserviceStudent.Models
+namespace MircroserviceCompositeSC.Models
 {
     [Serializable]
     public class Student
@@ -12,5 +12,6 @@ namespace MircroserviceStudent.Models
         public string Name { get; set; }
         public string GroupName { get; set; }
         public int Rating { get; set; }
+        public long CourseId { get; set; }
     }
 }
