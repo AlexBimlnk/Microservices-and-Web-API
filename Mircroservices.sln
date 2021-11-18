@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroserviceCourse", "MicroserviceCourse\MicroserviceCourse.csproj", "{AF81B474-148F-4B76-84AE-C004DEFD3F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MircroserviceСompositeSC", "MircroserviceСompositeSC\MircroserviceСompositeSC.csproj", "{28C74374-29AE-4FC3-9551-501912B38ACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MircroserviceСompositeSC", "MircroserviceСompositeSC\MircroserviceСompositeSC.csproj", "{28C74374-29AE-4FC3-9551-501912B38ACB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
