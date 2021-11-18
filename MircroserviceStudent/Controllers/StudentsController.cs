@@ -35,21 +35,15 @@ namespace MircroserviceStudent.Controllers
 
         //GET: Students/all
         [HttpGet("all")]
-        public async Task<string> GetAllCourses()
+        public async Task<List<Student>> GetAllStudentsAsync()
         {
-            var students = await _context.Students.ToListAsync();
-
-            return JsonSerializer.Serialize(students);
+            return await _context.Students.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> Get(long? id)
+        public async Task<Student> GetStudentByIdAsync(long? id)
         {
-            return await Task.Run(() =>
-            {
-                var student = _context.Students.FindAsync(id).Result;
-                return student;
-            });
+            return await Task.Run(() => _context.Students.FindAsync(id).Result);
         }
 
         //[HttpGet("course/{studentId}")]

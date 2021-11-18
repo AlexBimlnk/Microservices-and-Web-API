@@ -12,6 +12,9 @@ using System.Text.Json;
 
 namespace MicroserviceCourse.Controllers
 {
+    /// <summary>
+    /// Контроллер сервиса курсов.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : Controller
@@ -24,6 +27,10 @@ namespace MicroserviceCourse.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Асинхронно возвращает html страницу, содержащую список курсов.
+        /// </summary>
+        /// <returns> <see cref="ViewResult"/>. </returns>
         //GET: Courses
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -31,23 +38,46 @@ namespace MicroserviceCourse.Controllers
             return View(await _context.Courses.ToListAsync());
         }
 
+        /// <summary>
+        /// Асинхронно возвращает все курсы.
+        /// </summary>
+        /// <returns> Список <see cref="List{T}"/>, где T является <see cref="Course"/>. </returns>
         //GET: Courses/all
         [HttpGet("all")]
-        public async Task<string> GetAllCourses()
+        public async Task<List<Course>> GetAllCoursesAsync()
         {
-            var courses = await _context.Courses.ToListAsync();
-
-            return JsonSerializer.Serialize(courses);
+            return await _context.Courses.ToListAsync();
         }
 
+        /// <summary>
+        /// Асинхронно возвращает объект <see cref="Course"/> по имени группы.
+        /// </summary>
+        /// <param name="groupName"> Имя группы. </param>
+        /// <returns> Объект типа <see cref="Course"/>. </returns>
         //Get: Courses/name/{groupName}
         [HttpGet("name/{groupName}")]
-        public async Task<string> GetCourseByName(string groupName)
+        public async Task<Course> GetCourseByNameAsync(string groupName)
         {
-            var course = await _context.Courses.Where(c => c.Name == groupName).FirstAsync();
-            return JsonSerializer.Serialize(course);
+            return await _context.Courses.Where(c => c.Name == groupName).FirstAsync();
         }
 
+        /// <summary>
+        /// Асинхронно возвращает объект <see cref="Course"/> по id.
+        /// </summary>
+        /// <param name="id"> Id группы. </param>
+        /// <returns> Объект типа <see cref="Course"/>. </returns>
+        //Get: Courses/{id}
+        [HttpGet("{id}")]
+        public async Task<Course> GetCourseByIdAsync(long id)
+        {
+            return await _context.Courses.FindAsync(id);
+        }
+
+        /// <summary>
+        /// Добавляет новый курс в базу данных, если полученная модель валидна.
+        /// </summary>
+        /// <param name="course"> Объект <see cref="Course"/>, составленный из Body запроса. </param>
+        /// <returns> <see cref="Index"/>, если объект успешно добавлен. </returns>
         // POST: Courses
         [HttpPost]
         public async Task<IActionResult> Create(Course course)
@@ -61,6 +91,11 @@ namespace MicroserviceCourse.Controllers
             return View(course);
         }
 
+        /// <summary>
+        /// Изменяет курс в базе данных по его id.
+        /// </summary>
+        /// <param name="id"> Id курса. </param>
+        /// <param name="course"> Объект <see cref="Course"/>, составленный из Body запроса. </param>
         //Put: courses/{id}
         [HttpPut("{id}")]
         public async Task Edit(long id, Course course)
@@ -70,6 +105,11 @@ namespace MicroserviceCourse.Controllers
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Удаляет курс по его id.
+        /// </summary>
+        /// <param name="id"> Id курса. </param>
+        /// <returns></returns>
         //Delete: courses/{id}
         [HttpDelete("{id}")]
         public async Task DeleteConfirmed(long id)

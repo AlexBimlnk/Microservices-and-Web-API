@@ -2,6 +2,7 @@
 using MircroserviceCompositeSC.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -26,26 +27,8 @@ namespace MircroserviceСompositeSC.Controllers
         }
 
         //Get: api/compositesc/
-        [HttpGet("disciplenes/{groupName}")]
-        public async Task<string> GetDisciplenesByGroup(string groupName)
-        {
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            using (HttpClient client = new HttpClient(clientHandler))
-            {
-                HttpResponseMessage response = await client.GetAsync($"{_courseServiceAddress}/name/{groupName}");
-                if (response.IsSuccessStatusCode)
-                {
-                    Course course = await JsonSerializer.DeserializeAsync<Course>(await response.Content.ReadAsStreamAsync());
-                    return course.Disciplenes;
-                }
-            }
-            return null;
-        }
-
-        //Get: api/compositesc/
-        [HttpGet("disciplenes")]
-        public async Task<string> GetAllDisciplenes()
+        [HttpGet("courses/{discipleneName}")]
+        public async Task<List<Course>> GetCoursesByDiscipleneAsync(string discipleneName)
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
@@ -54,40 +37,19 @@ namespace MircroserviceСompositeSC.Controllers
                 HttpResponseMessage response = await client.GetAsync($"{_courseServiceAddress}/all");
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Course> courses = await JsonSerializer.DeserializeAsync<List<Course>>(await response.Content.ReadAsStreamAsync());
-                    StringBuilder answer = new StringBuilder();
-                    foreach (var i in courses)
-                        answer.AppendLine(i.Disciplenes);
-                    return answer.ToString();
+                    List<Course> courses = await JsonSerializer.DeserializeAsync<List<Course>>(
+                                          await response.Content.ReadAsStreamAsync(), 
+                                          new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    
+                    return courses.Where(course => course.Disciplenes.Split(',').Contains(discipleneName)).ToList();
                 }
             }
             return null;
         }
 
         //Get: api/compositesc/
-        [HttpGet("course/names")]
-        public async Task<string> GetCourseNames()
-        {
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            using (HttpClient client = new HttpClient(clientHandler))
-            {
-                HttpResponseMessage response = await client.GetAsync($"{_courseServiceAddress}/all");
-                if (response.IsSuccessStatusCode)
-                {
-                    List<Course> courses = await JsonSerializer.DeserializeAsync<List<Course>>(await response.Content.ReadAsStreamAsync());
-                    StringBuilder answer = new StringBuilder();
-                    foreach (var i in courses)
-                        answer.AppendLine(i.Name);
-                    return answer.ToString();
-                }
-            }
-            return null;
-        }
-
-        //Get: api/compositesc/
-        [HttpGet("rating/{groupName}")]
-        public async Task<string> GetGroupRating(string groupName)
+        [HttpGet("students/{groupName}")]
+        public async Task<List<Student>> GetStudentsByGroupAsync(string groupName)
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
@@ -96,19 +58,42 @@ namespace MircroserviceСompositeSC.Controllers
                 HttpResponseMessage response = await client.GetAsync($"{_studentServiceAddress}/all");
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Student> students = await JsonSerializer.DeserializeAsync<List<Student>>(await response.Content.ReadAsStreamAsync());
-                    StringBuilder answer = new StringBuilder();
-                    long ratingSum = 0;
-                    foreach (var i in students.Where(st => st.GroupName == groupName)) 
-                    {
-                        answer.AppendLine(i.Rating.ToString());
-                        ratingSum += i.Rating;
-                    }
-                    answer.AppendLine($"Rating sum: {ratingSum}");
-                    return answer.ToString();
+                    List<Student> students = await JsonSerializer.DeserializeAsync<List<Student>>(
+                                            await response.Content.ReadAsStreamAsync(), 
+                                            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+                    return students.Where(student => student.GroupName == groupName).ToList();
                 }
             }
             return null;
+        }
+
+        //Get: api/compositesc/
+        [HttpGet("rating/{groupName}")]
+        public async Task<double> GetAverageGroupRatingAsync(string groupName)
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient client = new HttpClient(clientHandler))
+            {
+                HttpResponseMessage response = await client.GetAsync($"{_studentServiceAddress}/all");
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Student> students = await JsonSerializer.DeserializeAsync<List<Student>>(
+                                             await response.Content.ReadAsStreamAsync(), 
+                                             new JsonSerializerOptions() { PropertyNameCaseInsensitive = true});
+                    
+                    
+                    var collection = students.Where(st => st.GroupName == groupName).ToList();
+                    long ratingSum = 0;
+
+                    foreach (var i in collection) 
+                        ratingSum += i.Rating;
+
+                    return ratingSum / collection.Count;
+                }
+            }
+            return -1;
         }
     }
 }
