@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MicroserviceCourse.Models;
-using Interfaces;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -20,8 +19,12 @@ namespace MicroserviceCourse.Controllers
     public class CoursesController : Controller
     {
         private readonly CourseContext _context;
-        private readonly string _compositeSeviceAddress = "https://localhost:44354/api/compositesc";
+        //private readonly string _compositeSeviceAddress = "https://localhost:44354/api/compositesc";
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="context"> Контекст базы данных. </param>
         public CoursesController(CourseContext context)
         {
             _context = context;
@@ -109,7 +112,6 @@ namespace MicroserviceCourse.Controllers
         /// Удаляет курс по его id.
         /// </summary>
         /// <param name="id"> Id курса. </param>
-        /// <returns></returns>
         //Delete: courses/{id}
         [HttpDelete("{id}")]
         public async Task DeleteConfirmed(long id)

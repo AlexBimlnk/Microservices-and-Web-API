@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MicroserviceCourse</name>
+    </assembly>
+    <members>
+        <member name="T:MicroserviceCourse.Controllers.CoursesController">
+            <summary>
+            Контроллер сервиса курсов.
+            </summary>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.#ctor(MicroserviceCourse.Models.CourseContext)">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="context"> Контекст базы данных. </param>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.Index">
+            <summary>
+            Асинхронно возвращает html страницу, содержащую список курсов.
+            </summary>
+            <returns> <see cref="T:Microsoft.AspNetCore.Mvc.ViewResult"/>. </returns>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.GetAllCoursesAsync">
+            <summary>
+            Асинхронно возвращает все курсы.
+            </summary>
+            <returns> Список <see cref="T:System.Collections.Generic.List`1"/>, где T является <see cref="T:MicroserviceCourse.Models.Course"/>. </returns>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.GetCourseByNameAsync(System.String)">
+            <summary>
+            Асинхронно возвращает объект <see cref="T:MicroserviceCourse.Models.Course"/> по имени группы.
+            </summary>
+            <param name="groupName"> Имя группы. </param>
+            <returns> Объект типа <see cref="T:MicroserviceCourse.Models.Course"/>. </returns>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.GetCourseByIdAsync(System.Int64)">
+            <summary>
+            Асинхронно возвращает объект <see cref="T:MicroserviceCourse.Models.Course"/> по id.
+            </summary>
+            <param name="id"> Id группы. </param>
+            <returns> Объект типа <see cref="T:MicroserviceCourse.Models.Course"/>. </returns>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.Create(MicroserviceCourse.Models.Course)">
+            <summary>
+            Добавляет новый курс в базу данных, если полученная модель валидна.
+            </summary>
+            <param name="course"> Объект <see cref="T:MicroserviceCourse.Models.Course"/>, составленный из Body запроса. </param>
+            <returns> <see cref="M:MicroserviceCourse.Controllers.CoursesController.Index"/>, если объект успешно добавлен. </returns>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.Edit(System.Int64,MicroserviceCourse.Models.Course)">
+            <summary>
+            Изменяет курс в базе данных по его id.
+            </summary>
+            <param name="id"> Id курса. </param>
+            <param name="course"> Объект <see cref="T:MicroserviceCourse.Models.Course"/>, составленный из Body запроса. </param>
+        </member>
+        <member name="M:MicroserviceCourse.Controllers.CoursesController.DeleteConfirmed(System.Int64)">
+            <summary>
+            Удаляет курс по его id.
+            </summary>
+            <param name="id"> Id курса. </param>
+            <returns></returns>
+        </member>
+        <member name="T:MicroserviceCourse.Models.Course">
+            <summary>
+            Модель данных Курс.
+            </summary>
+        </member>
+        <member name="P:MicroserviceCourse.Models.Course.Id">
+            <summary>
+            Задаёт или возвращает ID курса.
+            </summary>
+        </member>
+        <member name="P:MicroserviceCourse.Models.Course.Name">
+            <summary>
+            Задаёт или возвращает имя курса.
+            </summary>
+        </member>
+        <member name="P:MicroserviceCourse.Models.Course.Disciplenes">
+            <summary>
+            Задаёт или возвращает дисциплины данного курса.
+            </summary>
+        </member>
+        <member name="T:MicroserviceCourse.Models.CourseContext">
+            <summary>
+            Контекст базы данных для курса.
+            </summary>
+        </member>
+        <member name="M:MicroserviceCourse.Models.CourseContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{MicroserviceCourse.Models.CourseContext})">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="options"> Опции для этого контекста. </param>
+        </member>
+        <member name="P:MicroserviceCourse.Models.CourseContext.Courses">
+            <summary>
+            Возвращает список курсов из базы данных.
+            </summary>
+        </member>
+    </members>
+</doc>

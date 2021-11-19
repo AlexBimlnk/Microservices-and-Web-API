@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MircroserviceStudent</name>
+    </assembly>
+    <members>
+        <member name="T:MircroserviceStudent.Controllers.StudentsController">
+            <summary>
+            Контроллер сервиса студентов.
+            </summary>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.#ctor(MircroserviceStudent.Models.StudentContext)">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="context"> Контекст базы данных. </param>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.Index">
+            <summary>
+            Асинхронно возвращает html страницу, содержащую список студентов.
+            </summary>
+            <returns> <see cref="T:Microsoft.AspNetCore.Mvc.ViewResult"/>. </returns>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.GetAllStudentsAsync">
+            <summary>
+            Асинхронно возвращает всех студентов.
+            </summary>
+            <returns> Список <see cref="T:System.Collections.Generic.List`1"/>, где T является <see cref="T:MircroserviceStudent.Models.Student"/>. </returns>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.GetStudentByIdAsync(System.Nullable{System.Int64})">
+            <summary>
+            Асинхронно возвращает объект <see cref="T:MircroserviceStudent.Models.Student"/> по id.
+            </summary>
+            <param name="id"> Id студента. </param>
+            <returns> Объект типа <see cref="T:MircroserviceStudent.Models.Student"/>. </returns>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.Create(MircroserviceStudent.Models.Student)">
+            <summary>
+            Добавляет нового студента в базу данных, если полученная модель валидна.
+            </summary>
+            <param name="student"> Объект <see cref="T:MircroserviceStudent.Models.Student"/>, составленный из Body запроса. </param>
+            <returns> <see cref="M:MircroserviceStudent.Controllers.StudentsController.Index"/>, если объект успешно добавлен. </returns>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.Edit(System.Int64,MircroserviceStudent.Models.Student)">
+            <summary>
+            Изменяет студента в базе данных по его id.
+            </summary>
+            <param name="id"> Id студента. </param>
+            <param name="student"> Объект <see cref="T:MircroserviceStudent.Models.Student"/>, составленный из Body запроса. </param>
+        </member>
+        <member name="M:MircroserviceStudent.Controllers.StudentsController.DeleteConfirmed(System.Int64)">
+            <summary>
+            Удаляет студента по его id.
+            </summary>
+            <param name="id"> Id студента. </param>
+        </member>
+        <member name="T:MircroserviceStudent.Models.Student">
+            <summary>
+            Модель данных Студент.
+            </summary>
+        </member>
+        <member name="P:MircroserviceStudent.Models.Student.Id">
+            <summary>
+            Возвращает или задаёт id студента.
+            </summary>
+        </member>
+        <member name="P:MircroserviceStudent.Models.Student.Name">
+            <summary>
+            Возвращает или задаёт имя студента.
+            </summary>
+        </member>
+        <member name="P:MircroserviceStudent.Models.Student.GroupName">
+            <summary>
+            Возвращает или задаёт имя группы, к которой принадлежит студент.
+            </summary>
+        </member>
+        <member name="P:MircroserviceStudent.Models.Student.Rating">
+            <summary>
+            Возвращает или задаёт рейтинг студента.
+            </summary>
+        </member>
+    </members>
+</doc>

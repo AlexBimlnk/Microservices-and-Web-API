@@ -5,16 +5,18 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MircroserviceCompositeSC.Models
+namespace MircroserviceСompositeSC.Models
 {
     [Serializable]
     public class Course
     {
-        //[JsonPropertyName("id")]
+        [JsonPropertyName("id")]
         public long Id { get; set ; }
-        //[JsonPropertyName("name")]
+
+        [JsonPropertyName("name")]
         public string Name { get; set; }
-        //[JsonPropertyName("disciplenes")]
+
+        [JsonPropertyName("disciplenes")]
         public string Disciplenes { get; set; }
     }
 }

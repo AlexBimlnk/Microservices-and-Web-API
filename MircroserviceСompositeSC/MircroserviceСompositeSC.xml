@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MircroserviceСompositeSC</name>
+    </assembly>
+    <members>
+        <member name="T:MircroserviceСompositeSC.Controllers.CompositeSCController">
+            <summary>
+            Контроллер композитного сервиса.
+            </summary>
+        </member>
+        <member name="M:MircroserviceСompositeSC.Controllers.CompositeSCController.GetCoursesByDiscipleneAsync(System.String)">
+            <summary>
+            Возвращает список курсов, в которых присутствует указанная дисциплина.
+            </summary>
+            <param name="discipleneName"> Имя дисциплины. </param>
+            <returns> Список <see cref="T:System.Collections.Generic.List`1"/>, где T является <see cref="T:MircroserviceСompositeSC.Models.Course"/>. </returns>
+        </member>
+        <member name="M:MircroserviceСompositeSC.Controllers.CompositeSCController.GetStudentsByGroupAsync(System.String)">
+            <summary>
+            Возвращает список студентов заданной группы.
+            </summary>
+            <param name="groupName"> Имя группы. </param>
+            <returns> Список <see cref="T:System.Collections.Generic.List`1"/>, где T является <see cref="T:MircroserviceСompositeSC.Models.Student"/>. </returns>
+        </member>
+        <member name="M:MircroserviceСompositeSC.Controllers.CompositeSCController.GetAverageGroupRatingAsync(System.String)">
+            <summary>
+            Возвращает средний рейтинг группы.
+            </summary>
+            <param name="groupName"> Имя группы. </param>
+            <returns> Объект типа <see cref="T:MircroserviceСompositeSC.Models.RatingOfGroup"/>. </returns>
+        </member>
+        <member name="T:MircroserviceСompositeSC.Models.RatingOfGroup">
+            <summary>
+            Модель данных для рейтинга группы.
+            </summary>
+        </member>
+        <member name="P:MircroserviceСompositeSC.Models.RatingOfGroup.GroupName">
+            <summary>
+            Возвращает или задаёт имя группы.
+            </summary>
+        </member>
+        <member name="P:MircroserviceСompositeSC.Models.RatingOfGroup.AverageRating">
+            <summary>
+            Возвращает или задаёт средний рейтинг группы.
+            </summary>
+        </member>
+    </members>
+</doc>
